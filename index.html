@@ -1,0 +1,684 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+			<link rel="stylesheet" href="css/theme/treeptik2.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<!-- begin :: homepage -->
+				<section>
+					<img src="./images/afficher-testercestdouter.png" />
+				</section>
+				<!-- end :: homepage -->
+				<!-- begin :: menu jour1 -->
+				<section>
+					<h1>JOUR 1</h1>
+					<ul>
+						<li class="fragment">Les grands principes des tests</li>
+						<!-- https://martinfowler.com/bliki/TestPyramid.html -->
+						<li class="fragment">Pyramide des tests</li>
+						<!-- https://howtodoinjava.com/best-practices/first-principles-for-good-tests/ -->
+						<li class="fragment">Résolutions de nouvelle année</li>
+						<!-- http://javaetmoi.com/2016/02/tester-unitairement-application-java/ -->
+						<li class="fragment">Tester unitairement une application Java</li>
+						<ul>
+							<li class="fragment">Principes</li>
+							<li class="fragment">Live demo</li>
+						</ul>
+					</ul>
+				</section>
+				<!-- end :: menu jour1 -->
+				<!-- begin :: Les grands principes -->
+				<section>
+					<section><h2>Les grands principes <br/>des tests unitaires</h2></section>
+					<section>
+						<h1>FIRST</h1>
+						<ul>
+							<li class="fragment">[F]ast</li>
+							<li class="fragment">[I]solated</li>
+							<li class="fragment">[R]epeatable</li>
+							<li class="fragment">[S]elf-validating</li>
+							<li class="fragment">[T]imely</li>
+						</ul>
+					</section>
+					<!-- begin :: fast -->
+					<section>
+						<h1>FIRST</h1>
+						<h2>[F]ast</h2>
+						<p class="fragment">Les tests unitaires doivent être rapides !</p>
+						<p class="fragment">Si un test prend 200ms, combien de temps pour en jouer 2000 ?</p>
+						<p class="fragment"><b>6,5 minutes...</b> sur votre poste de développeur</p>
+					</section>
+					<section>
+						<h2>FIRST</h2>
+						<h3>[F]ast</h3>
+						<p>Eviter les dépendances externes:
+							<ul>
+								<li class="fragment">Base de données</li>
+								<li class="fragment">Système de fichiers</li>
+								<li class="fragment">WebServices externes</li>
+								<li class="fragment">Appel réseaux</li>
+								<li class="fragment">Appel système (ex: getHostName)</li>
+							</ul>
+						</p>
+					</section>
+					<!-- end :: fast -->
+					<!-- begin :: isolation -->
+					<section>
+						<h2>FIRST</h2>
+						<h3>[I]solated</h3>
+						<p class="fragment">Ne jamais écrire de tests dépendants d'autres tests
+							<ul>
+								<li class="fragment">Risque de fausses alarmes</li>
+								<li class="fragment">Difficulté à remonter la chaîne en cas d'erreur</li>
+							</ul>
+						</p>
+						<p class="fragment">Dans le meilleur des mondes, on peut jouer ses tests
+							<ul>
+								<li class="fragment">Dans n'importe quel ordre</li>
+								<li class="fragment">N'importe quand</li>
+							</ul>
+						</p>
+					</section>
+					<section>
+						<h2>FIRST</h2>
+						<h3>[I]solated</h3>
+						<p class="fragment">Single Responsibility Principle (SOLID)
+							<ul>
+								<li class="fragment">Une classe doit être petite</li>
+								<li class="fragment">Une classe répond à un besoin unique</li>
+							</ul>
+						</p>
+						<p class="fragment">Si vos méthodes de tests peuvent échouer <br/>pour plusieurs raisons, alors découper les en plusieurs méthodes</p>
+					</section>
+					<!-- end :: isolation -->
+					<!-- begin :: repeteable -->
+					<section>
+						<h2>FIRST</h2>
+						<h3>[R]epeatable</h3>
+						<p class="fragment">Un test répétable doit fournir toujours le même résultat avec les mêmes entrées:
+							<ul>
+								<li class="fragment">Isoler vos tests de l'environnement extérieur hors de votre contrôle</li>
+								<li class="fragment">Mocker les objets qui vous échappe</li>
+								<li class="fragment">Utiliser une base de données InMemory</li>
+								<li class="fragment">Diviser pour régner</li>
+							</ul>
+						</p>
+					</section>
+					<section>
+						<h2>FIRST</h2>
+						<h3>[R]epeatable // Effet de bord</h3>
+						<p class="fragment">On nomme <b>effet de bord</b> l’utilisation (en lecture ou écriture),
+							par une fonction, de toute variable qui est en dehors de son contexte local.
+						</p>
+						<img class="fragment" src="images/effet-de-bord.png" />
+					</section>
+					<section>
+						<h2>FIRST</h2>
+						<h3>[R]epeatable // Effet de bord</h3>
+						<p>
+							<img class="fragment" src="images/effet-de-bord-fonction-mauvaise.png" width="80%"/>
+							<img class="fragment" src="images/effet-de-bord-fonction-bonne.png" width="80%"/>
+						</p>
+					</section>
+					<!-- end :: repeteable -->
+					<!-- begin :: self-validating -->
+					<section>
+						<h2>FIRST</h2>
+						<h3>[S]elf-validating</h3>
+						<p class="fragment">Pas d'interprétation manuelle des résulstats
+							<ul>
+								<li class="fragment">Gaspillage de temps</li>
+								<li class="fragment">Source des erreurs
+							</ul>
+						</p>
+						<p class="fragment">Tout doit être automatisé
+							<ul>
+								<li class="fragment">Eviter les bidouilles sur les données avant lancement</li>
+								<li class="fragment">Garder les bases InMemory comme dernière cartouche</li>
+							</ul>
+						</p>
+					</section>
+					<!-- end :: self-validating -->
+					<!-- begin :: timely -->
+					<section>
+						<h2>FIRST</h2>
+						<h3>[T]imely</h3>
+						<p class="fragment">Vous devez pouvoir les jouer n'importe quand !
+							<ul>
+								<li class="fragment">Pas de dépendances externes</li>
+								<li class="fragment">Attention à manipulation des dates !</li>
+							</ul>
+						</p>
+					</section>
+					<!-- end :: self-validating -->
+					<!-- begin :: tools -->
+					<section>
+						<h2>FIRST</h2>
+						<h3>Tools</h3>
+						<img src="images/infinitest.png" width="50%"/>
+					</section>
+					<!-- end :: tools -->
+				</section>
+				<!-- end :: Les grands principes -->
+				<!-- begin :: La pyramide des tests -->
+				<section>
+					<section><h2>Pyramide des tests</h2></section>
+					<section><img src="images/pyramide-0.png"/></section>
+					<section><img src="images/pyramide-1.png"/></section>
+					<section><img src="images/pyramide-2.png"/></section>
+					<section><img src="images/pyramide-3.png"/></section>
+					<section><img src="images/pyramide-4.png"/></section>
+					<section><img src="images/pyramide-5.png"/></section>
+					<section><img src="images/pyramide-6.png"/></section>
+					<section><img src="images/pyramide-conclusion.png"/></section>
+				</section>
+				<!-- end :: La pyramide des tests -->
+
+				<!-- begin :: Bonnes pratiques -->
+				<section>
+					<section><h2>Bonnes pratiques</h2></section>
+					<section>
+						<blockquote>Il est extrêmement facile d'écrire de mauvais tests unitaires qui ajoutent très peu de valeur à un projet tout en
+											  gonflant le coût des changements de code astronomiquement</blockquote>
+					</section>
+					<section>
+						<blockquote>Les tests unitaires n'ont pas vocation à vous aider à des bugs complexes ou des régressions métiers</blockquote>
+					</section>
+					<section>
+						<blockquote>Les tests unitaires ne sont là que pour tester ders morceaux de code indépendants</blockquote>
+					</section>
+					<section>
+						<blockquote>Les tests unitaires doivent être vus comme un partie du processus de design de l'application, cf TDD</blockquote>
+					</section>
+					<section>
+						<blockquote>Prouver que deux composants A et B fonctionnent ne prouvent pas qu'ils vont fonctionner ensemble</blockquote>
+					</section>
+					<section>
+						<img src="images/unitests-fail-0.gif" />
+					</section>
+					<section>
+						<blockquote>Les tests d'intégrations sont là pour valider l'ensemble fonctionne</blockquote>
+					</section>
+					<section>
+							<h3>Tester une chose à la fois</h3>
+							<h4>Exemple d'une méthode qui prend deux paramètres et retourne une valeur</h4>
+							<ul class="fragment">
+								<li class="fragment">Si premier paramètre est nul alors InvalidParameterException</li>
+								<li class="fragment">Si second paramètre est nul alors InvalidParameterException</li>
+								<li class="fragment">Si les deux paramètres sont nuls alors InvalidParameterException</li>
+								<li class="fragment">Si tout est bon, alors faire l'évaluation</li>
+							</ul>
+						</section>
+						<section><h3>Mais encore...</h3>
+							<ul>
+								<li class="fragment">Supprimer les tests qui n'ont pas de sens</li>
+								<li class="fragment">Ne faites pas trop d'assertions</li>
+								<li class="fragment">N'utiliser pas @Ignore ou Maven skipTests</li>
+								<li class="fragment">N'utiliser pas de membres statiques</li>
+								<li class="fragment">Ne rien afficher durant les tests unitaires</li>
+								<li class="fragment">Remplir les paramètres d'assertion dans le bon ordre</li>
+							</ul>
+						</section>
+						<section>
+							<h3>Gestion des exceptions</h3>
+							<h4>Pas de try...catch() { assertion } mais</h4>
+							<pre class="fragment">
+								<code data-trim data-noescape>
+									@Test(expected=SomeDomainSpecificException.SubException.class)
+								</code>
+							</pre>
+						</section>
+						<section>
+							<h3>Règle de nommage</h3>
+							<h4>Soyez clair avec vous et vos collègues</h4>
+							<ul class="fragment">
+								<li class="fragment">TestCreateEmployee_NullId_ShouldThrowException</li>
+								<li class="fragment">TestCreateEmployee_NegativeId_ShouldThrowException</li>
+								<li class="fragment">TestCreateEmployee_DuplicateId_ShouldThrowException</li>
+								<li class="fragment">TestCreateEmployee_ValidId_ShouldPass</li>
+							</ul>
+						</section>
+				</section>
+				<!-- end :: Bonnes pratiques -->
+
+				<!-- begin :: Mauvaises pratiques -->
+				<section>
+					<section>
+						<h2>Mauvaises pratiques</h2>
+					</section>
+					<section>
+						<h4>
+							Il est extrêmement facile d'écrire de mauvais tests unitaires qui ajoutent très peu de valeur à un projet tout en
+												  gonflant le coût des changements de code astronomiquement
+						</h4>
+					</section>
+					<section>
+						<h4>Les tests passent mais ne testent pas la fonctionnalité</h4>
+					</section>
+					<section>
+						<h4>Tester plusieurs choses avec plusieurs assertions</h4>
+						<aside class="notes">
+							Ne signifie pas qu'on puisse pas utiliser plusieurs assertions pour le même test.
+							Exemple d'un objet retourné avec plusieurs attributs (nom, prenom...).
+							On ne ferait pas un test pour chaque attribut, c'est de la duplication de code.
+						</aside>
+					</section>
+					<section>
+						<h4>Trop de préparations</h4>
+						<ul>
+							<li>Créer l'utlisateur</li>
+							<li>Définir les permissions sur l'utilisateur</li>
+							<li>Créer la réunion</li>
+							<li>Définir les propriétés de la réunion</li>
+							<li>[TEST] Joindre l'utilisateur à la réunion</li>
+							<li>Echec/Success</li>
+						</ul>
+						<aside class="notes">
+							Créer a minima les objets sinon faites des mocks
+						</aside>
+					</section>
+					<section>
+						<h4>Ne tester que sur son poste</h4>
+						<aside class="notes">
+							Exemple sous Windows toujours
+						</aside>
+					</section>
+				</section>
+				<!-- end :: Mauvaises pratiques -->
+
+				<!-- begin :: Injecter Mockito Mocks Dans Spring Beans-->
+				<section>
+					<section>
+						<h1>Mockito</h1>
+						<h3>La guerre des Mocks</h3>
+					</section>
+					<section>
+						Comment utiliser l'injection de dépendances pour insérer des Mocks dans les Beans Spring pour les tests unitaires ?
+					</section>
+					<section>
+						<h3>Ajout des dépendances Maven</h3>
+						<pre>
+							<code data-trim>
+								<dependency>
+							    <groupId>org.springframework.boot</groupId>
+							    <artifactId>spring-boot-starter</artifactId>
+							    <version>1.3.1.RELEASE</version>
+								</dependency>
+								<dependency>
+							    <groupId>org.springframework.boot</groupId>
+							    <artifactId>spring-boot-starter-test</artifactId>
+							    <version>1.3.1.RELEASE</version>
+							    <scope>test</scope>
+								</dependency>
+								<dependency>
+							    <groupId>org.mockito</groupId>
+							    <artifactId>mockito-core</artifactId>
+							    <version>2.8.9</version>
+								</dependency>
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Un service de base comme exemple</h3>
+						<pre>
+							<code data-trim>
+	@Service
+	public class NameService {
+	    public String getUserName(String id) {
+	        return "Real user name";
+	    }
+	}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Injecté ainsi dans un autre service</h3>
+						<pre>
+							<code data-trim>
+							@Service
+							public class UserService {
+
+							    private NameService nameService;
+
+							    @Autowired
+							    public UserService(NameService nameService) {
+							        this.nameService = nameService;
+							    }
+
+							    public String getUserName(String id) {
+							        return nameService.getUserName(id);
+							    }
+							}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Exemple IDE</h3>
+						<pre>
+							<code data-trim>
+	@SpringBootApplication
+	public class MocksApplication {
+	    public static void main(String[] args) {
+	        SpringApplication.run(MocksApplication.class, args);
+	    }
+	}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Configuration de test</h3>
+						<pre>
+							<code data-trim>
+								@Profile("test")
+								@Configuration
+								public class NameServiceTestConfiguration {
+								    @Bean
+								    @Primary
+								    public NameService nameService() {
+								        return Mockito.mock(NameService.class);
+								    }
+								}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Classe de test</h3>
+						<pre>
+							<code data-trim>
+								@ActiveProfiles("test")
+								@RunWith(SpringJUnit4ClassRunner.class)
+								@SpringBootTest(classes = MocksApplication.class)
+								public class UserServiceTest {
+								    @Autowired
+								    private UserService userService;
+								    @Autowired
+								    private NameService nameService;
+
+								    @Test
+								    public void whenUserIdIsProvided_thenRetrievedNameIsCorrect() {
+								        Mockito.when(nameService.getUserName("SomeId")).thenReturn("Mock user name");
+								        String testName = userService.getUserName("SomeId");
+								        Assert.assertEquals("Mock user name", testName);
+								    }
+								}
+							</code>
+						</pre>
+					</section>
+
+					<!-- end :: Injecter Mockito Mocks Dans Spring Beans-->
+				</section>
+
+				<!-- begin :: Ecrire des tests avec Spring 1.4 puis 1.5 -->
+				<section>
+					<section>
+						<h2>Ecrire des tests <br/>avec Spring 1.4 et 1.5</h2>
+					</section>
+					<section>
+						<h2>Spring 1.4</h2>
+						<ul>
+							<li>Sorti en juillet 2016</li>
+							<li>Evolutions importantes pour les tests</li>
+							<li>De nombreuses classes antérieures à 1.4 ont été supprimées en 1.5</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Modification POM.xml</h2>
+						<pre>
+							<code data-trim>
+								<dependency>
+								  <groupId>org.springframework.boot</groupId>
+								  <artifactId>spring-boot-starter-test</artifactId>
+								  <scope>test</scope>
+								</dependency>
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h2>Configuration du test en 1.3</h2>
+						<pre>
+							<code data-trim>
+								@RunWith(SpringJUnit4ClassRunner.class)
+								@SpringApplicationConfiguration(classes = DemoApplication.class)
+								@WebAppConfiguration
+								public class DemoControllerTest {
+								    // ...
+								}
+							</code>
+							<aside class="notes">
+								Le test ci-dessus va charger la classe de configuration Spring Boot DemoApplication
+								à l'intérieur d'un contexte d'application de type WebApplicationContext.
+							</aside>
+						</pre>
+					</section>
+					<section>
+						<h2>Depuis SpringBoot 1.4</h2>
+						<pre>
+							<code data-trim>
+								@RunWith(SpringRunner.class)
+								@SpringBootTest
+								public class DemoControllerTest {
+								    // ...
+								}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Conversion 1/2</h3>
+						<pre>
+							<code data-trim>
+								@SpringApplicationConfiguration(classes=MyConfig.class)
+								@SpringBootTest(classes=MyConfig.class)
+							</code>
+							<code data-trim>
+@ContextConfiguration(
+            classes=MyConfig.class,
+            loader=SpringApplicationContextLoader.class)
+@SpringBootTest(classes=MyConfig.class)
+							</code>
+							<code data-trim>
+								@IntegrationTest
+								@SpringBootTest(webEnvironment=WebEnvironment.NONE)
+							</code>
+						</pre>
+						</section>
+						<section>
+							<h3>Conversion 2/2</h3>
+							<pre>
+							<code data-trim>
+								@IntegrationTest + @WebAppConfiguration
+								@SpringBootTest(webEnvironment=WebEnvironment.DEFINED_PORT)
+							</code>
+							<code data-trim>
+								@WebIntegrationTest
+								@SpringBootTest(webEnvironment=WebEnvironment.DEFINED_PORT)
+							</code>
+							<code data-trim>
+								@RunWith(SpringJUnit4ClassRunner.class)
+								@RunWith(SpringRunner.class)
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Gestion des Mocks 1.3</h3>
+						<pre>
+							<code data-trim>
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = DemoApplication.class)
+@WebAppConfiguration
+public class DemoControllerTest {
+  private MockMvc mockMvc;
+  @Mock
+  private DemoService demoService;
+  @InjectMocks
+  private DemoController demoController;
+  @Before
+  public void setUp() {
+    Mockito.initMocks(this);
+    this.mockMvc = MockMvcBuilders.standaloneSetup(demoController).build();
+    Mockito.when(demoService.call()).thenReturn(42);
+  }
+}
+</code>
+						</pre>
+						<aside class="notes">
+							@Mock creates a mock.
+							@InjectMocks creates an instance of the class and injects the mocks that are created with the @Mock (or @Spy) annotations into this instance.
+						  Note that you must use @RunWith(MockitoJUnitRunner.class) or Mockito.initMocks(this) to initialise these mocks and inject them.
+						</aside>
+					</section>
+					<section>
+						<h3>Gestion des Mocks 1.4</h3>
+						<h4>@MockBean</h4>
+						<pre>
+							<code data-trim>
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class DemoControllerTest {
+    private MockMvc mockMvc;
+    @MockBean
+    private DemoService demoService;
+    @Autowired
+    private DemoController demoController;
+    @Before
+    public void setUp() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(demoController).build();
+        Mockito.when(demoService.call()).thenReturn(42);
+    }
+}
+</code>
+						</pre>
+						<aside class="notes">
+							Plus besoin de @Mock et @InjectMocks car @MockBean fait le taf.
+							Les Mocks seront directmeent injectés dans le controleur Spring annoté @Autowired
+						</aside>
+					</section>
+					<section>
+						<h3>Ou bien encore ...</h3>
+						<h4>@WebMvcTest</h4>
+						<pre>
+							<code data-trim>
+@RunWith(SpringRunner.class)
+@WebMvcTest(DemoController.class)
+public class DemoControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private DemoService demoService;
+
+    @Before
+    public void setUp() {
+        Mockito.when(demoService.call()).thenReturn(42);
+    }
+}
+</code>
+						</pre>
+						<aside class="notes">
+							@WebMvcTest permet de tester spécifiquement des controllers Spring MVC avec MockMvc.
+							MockMvc n'a plus besoin d'être instancié explicitement dans le setup.
+							Grâce à l'annotation @WebMvcTest, l'instance peut être directement injectée dans le test.
+						</aside>
+					</section>
+					<section>
+						<h3>Mocker c'est aussi et surtout les Beans</h3>
+						<pre>
+							<code data-trim>
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+public class SampleTestApplicationWebIntegrationTests {
+
+    @MockBean
+    private VehicleDetailsService vehicleDetailsService;
+
+    @Before
+    public void setup() {
+        given(this.vehicleDetailsService.
+            getVehicleDetails("123")
+        ).willReturn(
+            new VehicleDetails("Honda", "Civic"));
+    }
+}
+							</code>
+						</pre>
+						<aside class="notes">
+							Creating a Mockito mock for VehicleDetailsService.
+							Injecting it into the ApplicationContext as a bean.
+							Injecting it into the field in the test.
+							Stubbing behavior in the setup method.
+							Trigger something that will ultimately call the mock.
+						</aside>
+					</section>
+					<section>
+						<ul>
+							<li>Mocks sont resétés entre les tests</li>
+							<li>Différence avec @SpyBean</li>
+						</ul>
+					</section>
+				</section>
+				<!-- begin :: Ecrire des tests avec Spring 1.4 puis 1.5 -->
+				<!--
+				<section>
+					<h1>JOUR 2</h1>
+					<ul>
+						<li class="fragment">Les tests d'intégrations</li>
+						<li class="fragment">Tests avec Spring Framework</li>
+						<li class="fragment">Tests avec SpringBoot</li>
+						<li class="fragment">Comment tester avec Docker</li>
+					</ul>
+				</section>
+				<section>
+					<h1>JOUR 3</h1>
+					<ul>
+						<li class="fragment">Qui veut gagner des millions ?</li>
+						<li class="fragment">Tests de performance</li>
+						<li class="fragment">Métriques Qualité sur le code</li>
+					</ul>
+				</section>
+				-->
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				// Display the page number of the current slide
+				slideNumber: true,
+				// Push each slide change to the browser history
+				history: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/title-footer/title-footer.js', async: true, callback: function() { title_footer.initialize(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
