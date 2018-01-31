@@ -29,10 +29,11 @@
 					<img src="./images/afficher-testercestdouter.png" />
 				</section>
 				<!-- end :: homepage -->
-				<!-- begin :: menu jour1 -->
+				<!-- begin :: menu programme -->
 				<section>
-					<h1>JOUR 1</h1>
+					<h2>Au programme</h2>
 					<ul>
+						<li class="fragment">Les différentes familles de tests</li>
 						<li class="fragment">Les grands principes des tests</li>
 						<!-- https://martinfowler.com/bliki/TestPyramid.html -->
 						<li class="fragment">Pyramide des tests</li>
@@ -46,7 +47,92 @@
 						</ul>
 					</ul>
 				</section>
-				<!-- end :: menu jour1 -->
+				<section>
+					<section><h2>Les différentes familles de tests</h2></section>
+					<section>
+						<h1>Tests unitaires</h1>
+						<ul>
+							<li class="fragment">Teste une méthode d'une classe en isolation du reste de l'application</li>
+							<li class="fragment">Les tests sont éxecutés via <b>mvn test</b></li>
+							<li class="fragment">Doivent être joués sur un poste hors réseau</li>
+							<li class="fragment">Outils : JUnit, Mockito...</li>
+							<li class="fragment">Plugin Maven : Surefire</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Tests intégration</h2>
+						<ul>
+							<li class="fragment">Teste un ensemble de composants</li>
+							<li class="fragment">Les tests sont éxecutés via <b>mvn verify</b></li>
+							<li class="fragment">Exemples:
+								<ul>
+									<li>WebService SOAP ou REST, Spring MVC...</li>
+									<li>Service métier interrogeant une base Oracle</li>
+									<li>JUnit, SoapUI, ...</li>
+								</ul>
+							</li>
+							<li class="fragment">Plugin Maven : FailSafe</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Tests fonctionnels</h2>
+						<ul>
+							<li class="fragment">Exécute des <b>scénarios fonctionnels</b> en similant des actions utilisateurs</li>
+							<li class="fragment">Outils:
+								<ul>
+									<li>Selenium</li>
+									<li>CasperJS, <a href="https://github.com/segmentio/nightmare">NightMareJS</a></li>
+									<li>Cucumber</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Tests performance</h2>
+						<ul>
+							<li class="fragment">Simule la charge d'utilisateurs en env iso-prod</li>
+							<li class="fragment">Outils:
+								<ul>
+									<li>JMeter</li>
+									<li>Gatling</li>
+									<li>Dynatrace</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Tests exploiratoires :: constat</h2>
+						<ul>
+							<li class="fragment">L'introduction des TU et IT dans une équipe Agile modifie beaucoup d'équilibre</li>
+							<li class="fragment">Les développeurs s'approprie la fonction de tester</li>
+							<li class="fragment">Il en résulte que les testeurs sont parfois marginalisées</li>
+							<li class="fragment"><b>Le but est d'intégrer ces spécialistes dans l'équipe Agile</b></li>
+						</ul>
+					</section>
+					<section>
+						<h2>Tests exploiratoires :: pratique</h2>
+						<ul>
+							<li class="fragment">Nécessite autonomie, compétence et créativité du testeur (comme L'Agile pour le dev)</li>
+							<li class="fragment">Préconise de mener de front toutes les activités liées au test
+								<ul>
+									<li class="fragment">découverte d'informations sur le produit</li>
+									<li class="fragment">conception des tests susceptibles de trouver des défauts</li>
+									<li class="fragment">exécution de ces tests</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Encore d'autres tests...</h2>
+						<ul>
+							<li class="fragment">De vulnérabilités</li>
+							<li class="fragment">De robustesse aux pannes</li>
+							<li class="fragment">D'installation (TDI)</li>
+							<li class="fragment">De déploiement</li>
+						</ul>
+					</section>
+				</section>
+				<!-- end :: menu programme -->
 				<!-- begin :: Les grands principes -->
 				<section>
 					<section><h2>Les grands principes <br/>des tests unitaires</h2></section>
@@ -145,6 +231,7 @@
 					<section>
 						<h2>FIRST</h2>
 						<h3>[S]elf-validating</h3>
+						<p class="fragment">Tester les classes utilitaires</p>
 						<p class="fragment">Pas d'interprétation manuelle des résulstats
 							<ul>
 								<li class="fragment">Gaspillage de temps</li>
@@ -198,14 +285,10 @@
 				<section>
 					<section><h2>Bonnes pratiques</h2></section>
 					<section>
-						<blockquote>Il est extrêmement facile d'écrire de mauvais tests unitaires qui ajoutent très peu de valeur à un projet tout en
-											  gonflant le coût des changements de code astronomiquement</blockquote>
+						<blockquote>Les tests unitaires n'ont pas vocation à vous aider à des bugs complexes</blockquote>
 					</section>
 					<section>
-						<blockquote>Les tests unitaires n'ont pas vocation à vous aider à des bugs complexes ou des régressions métiers</blockquote>
-					</section>
-					<section>
-						<blockquote>Les tests unitaires ne sont là que pour tester ders morceaux de code indépendants</blockquote>
+						<blockquote>Les tests unitaires ne sont là que pour tester des morceaux de code indépendants</blockquote>
 					</section>
 					<section>
 						<blockquote>Les tests unitaires doivent être vus comme un partie du processus de design de l'application, cf TDD</blockquote>
@@ -217,24 +300,25 @@
 						<img src="images/unitests-fail-0.gif" />
 					</section>
 					<section>
-						<blockquote>Les tests d'intégrations sont là pour valider l'ensemble fonctionne</blockquote>
+						<blockquote>Les tests d'intégrations sont là pour valider que l'ensemble fonctionne</blockquote>
 					</section>
 					<section>
 							<h3>Tester une chose à la fois</h3>
 							<h4>Exemple d'une méthode qui prend deux paramètres et retourne une valeur</h4>
 							<ul class="fragment">
-								<li class="fragment">Si premier paramètre est nul alors InvalidParameterException</li>
-								<li class="fragment">Si second paramètre est nul alors InvalidParameterException</li>
-								<li class="fragment">Si les deux paramètres sont nuls alors InvalidParameterException</li>
+								<li class="fragment">Si premier paramètre est <b>null</b> alors InvalidParameterException</li>
+								<li class="fragment">Si second paramètre est <b>null</b> alors InvalidParameterException</li>
+								<li class="fragment">Si les deux paramètres sont <b>null</b> alors InvalidParameterException</li>
 								<li class="fragment">Si tout est bon, alors faire l'évaluation</li>
 							</ul>
 						</section>
 						<section><h3>Mais encore...</h3>
 							<ul>
 								<li class="fragment">Supprimer les tests qui n'ont pas de sens</li>
-								<li class="fragment">Ne faites pas trop d'assertions</li>
-								<li class="fragment">N'utiliser pas @Ignore ou Maven skipTests</li>
-								<li class="fragment">N'utiliser pas de membres statiques</li>
+								<li class="fragment">Ne pas faire trop d'assertions</li>
+								<li class="fragment">Ne pas utiliser pas trop @Ignore ou Maven skipTests</li>
+								<li class="fragment">Ne jamais commenter un test mais utiliser @Ignore</li>
+								<li class="fragment">Ne pas utiliser de membres statiques</li>
 								<li class="fragment">Ne rien afficher durant les tests unitaires</li>
 								<li class="fragment">Remplir les paramètres d'assertion dans le bon ordre</li>
 							</ul>
@@ -286,7 +370,7 @@
 					<section>
 						<h4>Trop de préparations</h4>
 						<ul>
-							<li>Créer l'utlisateur</li>
+							<li>Créer l'utilisateur</li>
 							<li>Définir les permissions sur l'utilisateur</li>
 							<li>Créer la réunion</li>
 							<li>Définir les propriétés de la réunion</li>
@@ -310,7 +394,9 @@
 				<section>
 					<section>
 						<h1>Mockito</h1>
-						<h3>La guerre des Mocks</h3>
+						<p>
+							<img src="images/mocks.png" width="60%" />
+						</p>
 					</section>
 					<section>
 						Comment utiliser l'injection de dépendances pour insérer des Mocks dans les Beans Spring pour les tests unitaires ?
@@ -627,16 +713,135 @@ public class SampleTestApplicationWebIntegrationTests {
 							Injecting it into the field in the test.
 							Stubbing behavior in the setup method.
 							Trigger something that will ultimately call the mock.
+
+							Mocks sont resétés entre les tests
 						</aside>
 					</section>
 					<section>
+							<h2>Différences avec SpyBean</h2>
+							<ul>
+								<li class="fragment">Wrapper du bean</li>
+								<li class="fragment">Mais permet de mocker certaines méthodes indivuelles</li>
+							</ul>
+					</section>
+					<section>
+							<h2>Slicer pour mieux tester</h2>
+							<h4 class="fragment">Bout par bout...</h4>
+							<ul>
+								<li class="fragment">JPA</li>
+								<li class="fragment">MVC</li>
+								<li class="fragment">JSON</li>
+							</ul>
+					</section>
+					<section>
+							<h2>Pour se concentrer sur le côté JPA</h2>
+							<h4 class="fragment">@DataJpaTest</h4>
+							<ul>
+								<li class="fragment">Configure une in-memory database</li>
+								<li class="fragment">AutoConfiguration de Hibernate, SpringData et la DataSource</li>
+								<li class="fragment">Fais le @EntityScan</li>
+								<li class="fragment">Active le SQL Logging</li>
+							</uL>
+					</section>
+					<section>
+						<pre>
+							<code data-trim>
+@RunWith(SpringRunner.class)
+@DataJpaTest
+public class UserRepositoryTests {
+    @Autowired
+    private TestEntityManager entityManager;
+
+    @Autowired
+    private UserRepository repository;
+
+    @Test
+    public void findByUsernameShouldReturnUser() {
+        this.entityManager.persist(new User("sboot", "123"));
+        User user = this.repository.findByUsername("sboot");
+
+        assertThat(user.getUsername()).isEqualTo("sboot");
+        assertThat(user.getVin()).isEqualTo("123");
+    }
+}
+	</code>
+						</pre>
+					</section>
+					<section>
+						<h4>TestEntityManager</h4>
+						<p>Alternative à JPA EntityManager</p>
+						<p>dédiée aux tests</p>
+					</section>
+					<section>
+							<h2>Pour se concentrer sur le côté MVC</h2>
+							<h4 class="fragment">@WebMvcTest</h4>
+							<ul>
+								<li class="fragment">Auto-configure Spring MVC, Jackson, Gson, Message converters...</li>
+								<li class="fragment">Charge les composants (@Controller, @RestController, @JsonComponent...)</li>
+								<li class="fragment">Configure @MockMvc</li>
+							</uL>
+					</section>
+					<section>
+						<pre>
+							<code data-trim>
+								@RunWith(SpringRunner.class)
+								@WebMvcTest(UserVehicleController.class)
+								public class UserVehicleControllerTests {
+								    @Autowired
+								    private MockMvc mvc;
+								    @MockBean
+								    private UserVehicleService userVehicleService;
+								    @Test
+								    public void getVehicleShouldReturnMakeAndModel() {
+								        given(this.userVehicleService.getVehicleDetails("sboot"))
+								            .willReturn(new VehicleDetails("Honda", "Civic"));
+								        this.mvc.perform(get("/sboot/vehicle")
+								            .accept(MediaType.TEXT_PLAIN))
+								            .andExpect(status().isOk())
+								            .andExpect(content().string("Honda Civic"));
+								    }
+								}
+	</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Vous pourriez tout aussi utiliser au lieu de MockMvc</h3>
 						<ul>
-							<li>Mocks sont resétés entre les tests</li>
-							<li>Différence avec @SpyBean</li>
+							<li>HtmlUnit --> WebClient</li>
+							<li>Selenium --> WebDriver</li>
 						</ul>
 					</section>
+					<section>
+							<h2>Pour se concentrer sur le côté JSON</h2>
+							<h4 class="fragment">@JsonTest</h4>
+							<ul>
+								<li class="fragment">Auto-configure Jackson and/or Gson</li>
+								<li class="fragment">Ajoute les beans @JsonComponent définis</li>
+								<li class="fragment">Initialise JacksonTester ou GsonTester</li>
+							</uL>
+					</section>
+					<section>
+						<pre><code data-trim>
+@RunWith(SpringRunner.class)
+@JsonTest
+public class VehicleDetailsJsonTests {
+
+    private JacksonTester<VehicleDetails> json;
+
+    @Test
+    public void serializeJson() {
+        VehicleDetails details = new VehicleDetails(
+            "Honda", "Civic");
+
+        assertThat(this.json.write(details))
+            .extractingJsonPathStringValue("@.make")
+            .isEqualTo("Honda");
+    }
+}
+						</code></pre>
+					</section>
 				</section>
-				<!-- begin :: Ecrire des tests avec Spring 1.4 puis 1.5 -->
+				<!-- end :: Ecrire des tests avec Spring 1.4 puis 1.5 -->
 				<!--
 				<section>
 					<h1>JOUR 2</h1>
